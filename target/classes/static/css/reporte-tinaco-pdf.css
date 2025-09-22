@@ -1,0 +1,59 @@
+/* Estilos simplificados para compatibilidad con openhtmltopdf */
+@page { size: A4; margin: 14mm 16mm; }
+
+body {
+  font-family: Arial, sans-serif;
+  color: #1f2937;
+  font-size: 11.5px;
+  line-height: 1.4;
+  background: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+h1 { margin: 0; font-size: 18px; color: #0f172a; }
+h2 { margin: 0 0 6px; font-size: 14px; color: #0f172a; }
+
+/* Contenedor general (sin estilos especiales para compatibilidad) */
+
+/* Cabecera */
+.header { border-bottom: 2px solid #0f172a; padding: 4px 0 8px; margin-bottom: 8px; }
+.header-info { display: inline-block; vertical-align: top; max-width: 70%; }
+.logo { float: right; height: 64px; }
+.subtitle { font-size: 11px; color: #64748b; }
+.small-muted { font-size: 10px; color: #64748b; }
+.inline-pair { margin-top: 4px; }
+.inline-pair span { margin-right: 6px; }
+
+.badge-month { display: inline-block; background: #f0f9ff; color: #0ea5e9; font-weight: 600; padding: 2px 6px; border-radius: 4px; font-size: 10px; border: 1px solid #bae6fd; }
+
+/* Secciones */
+.section-card { border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 12px 12px; background: #ffffff; margin-top: 12px; }
+.section-header { margin-bottom: 6px; }
+
+/* Layout de dos columnas removido para alineación uniforme */
+
+/* Key-value layout usando tabla para compatibilidad */
+.kv { width: 100%; border-collapse: collapse; margin-top: 2px; }
+.kv tr td { padding: 4px 6px 4px 4px; vertical-align: top; font-size: 11px; }
+.kv tr td.label { width: 165px; font-weight: bold; color: #0f172a; }
+.kv tr:nth-child(odd) td { background: #fafafa; }
+
+/* Métricas (4 columnas) */
+.metrics-grid { font-size: 0; margin-top: 4px; }
+.metric-box { display: inline-block; vertical-align: top; width: 24%; border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px 6px 8px; background: #f8fafc; margin-right: 1%; box-sizing: border-box; }
+.metric-box:last-child { margin-right: 0; }
+.metric-title { font-size: 10px; text-transform: uppercase; color: #475569; margin-bottom: 4px; font-weight: bold; }
+.metric-value { font-size: 15px; font-weight: bold; color: #0f172a; }
+
+.footer-note { margin-top: 8px; font-size: 9.5px; color: #64748b; background: #f1f5f9; padding: 6px 8px; border-radius: 4px; border:1px solid #e2e8f0; }
+
+/* Tabla genérica (si se usa) */
+.table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.table th { background: #f1f5f9; text-align: left; padding: 6px 8px; border-bottom: 1px solid #e2e8f0; }
+.table td { padding: 5px 8px; border-bottom: 1px solid #f1f5f9; }
+.table tr:last-child td { border-bottom: none; }
+
+/* Limpiar floats en header */
+.header:after { content: ""; display: block; clear: both; }
+

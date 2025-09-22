@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Tinaco - AquaMonitor</title>
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/tinaco-edit.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-controls="sidebar" aria-expanded="false">☰</button>
+    <div class="nav-brand">
+      <img src="assets/logoSF.png" alt="Logo" class="nav-logo" />
+      <span>AquaMonitor</span>
+    </div>
+    <div class="nav-user">
+      <span>Bienvenido, <span id="userName">Cargando...</span></span>
+      <button class="logout-btn" id="logoutBtn">Cerrar Sesión</button>
+    </div>
+  </nav>
+
+  <div class="dashboard-container">
+    <aside class="sidebar" id="sidebar">
+      <ul class="sidebar-menu">
+  <li class="menu-item"><a href="dashboard.html"><span class="menu-icon" aria-hidden="true"><img src="assets/homeSidebar.png" width="18" height="18" alt=""></span><span>Inicio</span></a></li>
+        <li class="menu-item dropdown active">
+          <a href="#" class="dropdown-toggle"><span class="menu-icon" aria-hidden="true"><img src="assets/tinacoSideBar.png" width="18" height="18" alt=""></span><span>Tinacos</span><span class="dropdown-arrow">▼</span></a>
+          <ul class="dropdown-menu show">
+            <li><a href="tinacos-list.html">Lista de Tinacos</a></li>
+            <li><a href="tinacos-deactivated-list.html">Tinacos Desactivados</a></li>
+            <li><a href="tinaco-add.html">Agregar Tinaco</a></li>
+          </ul>
+        </li>
+        <li class="menu-item dropdown">
+          <a href="#" class="dropdown-toggle"><span class="menu-icon" aria-hidden="true"><img src="assets/bombaSidebar.png" width="18" height="18" alt=""></span><span>Bombas</span><span class="dropdown-arrow">▼</span></a>
+          <ul class="dropdown-menu">
+            <li><a href="bombas-list.html">Lista de Bombas</a></li>
+            <li><a href="bombas-deactivated-list.html">Bombas Desactivadas</a></li>
+            <li><a href="bomba-add.html">Agregar Bomba</a></li>
+          </ul>
+        </li>
+  <li class="menu-item"><a href="reportes.html"><span class="menu-icon" aria-hidden="true"><img src="assets/reporteSidebar.png" width="18" height="18" alt=""></span><span>Reportes</span></a></li>
+        <li class="menu-item dropdown">
+          <a href="#" class="dropdown-toggle"><span class="menu-icon" aria-hidden="true"><img src="assets/settingsSidebar.png" width="18" height="18" alt=""></span><span>Configuración</span><span class="dropdown-arrow">▼</span></a>
+          <ul class="dropdown-menu">
+            <li><a href="change-name.html">Cambiar Nombre</a></li>
+            <li><a href="change-password.html">Cambiar Contraseña</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content edit-main">
+      <div class="page-header">
+        <h1>Editar Tinaco</h1>
+        <p>Actualiza los datos del tinaco seleccionado.</p>
+      </div>
+
+      <div id="editLoading" class="state-message loading-state">Cargando datos…</div>
+      <div id="editError" class="state-message error-message" style="display:none"></div>
+
+      <div class="form-container" id="formContainer" style="display:none">
+        <form id="editTinacoForm" class="update-form">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required maxlength="100" />
+            <small class="field-error" id="err-nombre"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="ubicacion">Ubicación</label>
+            <input type="text" id="ubicacion" name="ubicacion" maxlength="100" />
+            <small class="field-error" id="err-ubicacion"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="capacidadLitros">Capacidad (L)</label>
+            <input type="number" id="capacidadLitros" name="capacidadLitros" min="1" max="100000" />
+            <small class="field-error" id="err-capacidad"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="destinoAgua">Destino del agua</label>
+            <input type="text" id="destinoAgua" name="destinoAgua" maxlength="100" />
+            <small class="field-error" id="err-destino"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="alturaMaximaCm">Altura máxima (cm)</label>
+            <input type="number" id="alturaMaximaCm" name="alturaMaximaCm" step="0.01" min="0.01" max="1000" />
+            <small class="field-error" id="err-altura"></small>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="tinacos-list.html" class="btn btn-secondary">Cancelar</a>
+          </div>
+
+          <div id="formGlobalError" class="error-message" style="display:none"></div>
+          <div id="formGlobalSuccess" class="success-message" style="display:none"></div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/sidebar.js"></script>
+  <script src="js/tinaco-edit.js"></script>
+</body>
+</html>

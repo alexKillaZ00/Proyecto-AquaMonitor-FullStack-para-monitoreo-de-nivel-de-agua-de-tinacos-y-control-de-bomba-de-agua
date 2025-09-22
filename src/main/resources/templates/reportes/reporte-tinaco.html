@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>MONITOR AGUA - REPORTE DE TINACOS</title>
+  <link rel="stylesheet" type="text/css" href="css/reporte-tinaco-pdf.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <div class="header-info">
+        <h1>Reporte Mensual de Tinaco</h1>
+        <div class="subtitle">Resumen operativo y de consumo</div>
+        <div class="inline-pair">
+          <span class="badge-month" th:text="${vm.mesTexto}">Mes Año</span>
+          <span class="small-muted">Generado: <span th:text="${vm.fechaGeneracion}"></span></span>
+        </div>
+      </div>
+      <img class="logo" src="assets/logoSF.png" alt="Logo" />
+    </div>
+
+    <div class="section-card">
+      <div class="section-header"><h2>Usuario</h2></div>
+      <table class="kv">
+        <tr><td class="label">Nombre</td><td th:text="${vm.usuarioNombre}">-</td></tr>
+        <tr><td class="label">Correo</td><td th:text="${vm.usuarioEmail}">-</td></tr>
+        <tr><td class="label">Tinaco</td><td th:text="${vm.tinacoNombre}">-</td></tr>
+        <tr><td class="label">Capacidad (L)</td><td th:text="${vm.capacidadLitros}">-</td></tr>
+      </table>
+    </div>
+
+    <div class="section-card">
+      <div class="section-header"><h2>Estado Actual</h2></div>
+      <table class="kv">
+        <tr><td class="label">Ubicación</td><td th:text="${vm.tinacoUbicacion != null ? vm.tinacoUbicacion : 'N/A'}">-</td></tr>
+        <tr><td class="label">Altura máx. (cm)</td><td th:text="${vm.alturaMaximaCm}">-</td></tr>
+        <tr><td class="label">Destino</td><td th:text="${vm.destinoAgua}">-</td></tr>
+        <tr><td class="label">Altura actual (cm)</td><td th:text="${vm.alturaActualCm}">-</td></tr>
+        <tr><td class="label">% Llenado actual</td><td th:text="${vm.porcentajeActual}">-</td></tr>
+      </table>
+    </div>
+
+    <div class="section-card" th:if="${vm.bombaNombre == null and vm.bombaCodigo == null}">
+      <div class="section-header"><h2>Bomba Asociada</h2></div>
+      <div style="font-size:11px; color:#64748b;">Tinaco sin bomba asociada</div>
+    </div>
+    <div class="section-card" th:if="${vm.bombaNombre != null or vm.bombaCodigo != null}">
+      <div class="section-header"><h2>Bomba Asociada</h2></div>
+      <table class="kv">
+        <tr>
+          <td class="label">Nombre / Código</td>
+          <td>
+            <span th:text="${vm.bombaNombre != null ? vm.bombaNombre : 'N/A'}"></span>
+            <span th:if="${vm.bombaCodigo != null}"> / </span>
+            <span th:text="${vm.bombaCodigo}"></span>
+          </td>
+        </tr>
+        <tr><td class="label">Modo</td><td th:text="${vm.bombaModo != null ? (vm.bombaModo == 'AUTOMATICO' ? 'AUTOMÁTICO' : vm.bombaModo) : 'N/A'}"></td></tr>
+        <tr><td class="label">Estado</td><td th:text="${vm.bombaEstado != null ? vm.bombaEstado : 'N/A'}"></td></tr>
+      </table>
+    </div>
+
+    <div class="section-card">
+      <div class="section-header"><h2>Métricas del Mes</h2></div>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-title">Consumo Total (L)</div>
+          <div class="metric-value" th:text="${#numbers.formatDecimal(vm.consumoTotalLitros, 0, 'COMMA', 2, 'POINT')}"></div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-title">Consumo Prom. Diario (L)</div>
+          <div class="metric-value" th:text="${#numbers.formatDecimal(vm.consumoPromedioDiarioLitros, 0, 'COMMA', 2, 'POINT')}">0</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-title">Llenado Total (L)</div>
+          <div class="metric-value" th:text="${#numbers.formatDecimal(vm.subidaTotalLitros, 0, 'COMMA', 2, 'POINT')}">0</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-title">Llenado Prom. Diario (L)</div>
+          <div class="metric-value" th:text="${#numbers.formatDecimal(vm.subidaPromedioDiariaLitros, 0, 'COMMA', 2, 'POINT')}">0</div>
+        </div>
+      </div>
+      <div class="footer-note">
+        Nota: Se usa una variación del 5% para calcular el descenso o consumo del agua, de igual manera para el ascenso o llenado. Estos son promedios calculados solo sobre días de consumo o llenado. Si no hubo eventos, el promedio queda en 0. Son consumos estimados basados en variaciones del nivel del tinaco.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

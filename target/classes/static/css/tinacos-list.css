@@ -1,0 +1,212 @@
+/* tinacos-list.css - estilos exclusivos del main content de la lista de tinacos */
+
+.tinacos-main {
+    padding: 30px;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    color: #2c3e50;
+    font-size: 2.2em;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    color: #7f8c8d;
+    font-size: 1.1em;
+}
+
+.state-message {
+    font-size: .95rem;
+    margin-bottom: 1rem;
+}
+
+.loading-state {
+    color: #555;
+}
+
+.error-state {
+    color: #b40000;
+}
+
+.empty-state {
+    color: #666;
+    font-style: italic;
+}
+
+.tinacos-grid {
+    display: grid;
+    /* Target ~4 per row on large screens: 4 * 320px + gaps */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+    align-items: stretch;
+}
+
+.tinaco-card {
+    background: #fff;
+    border: 1px solid #e2e6ea;
+    border-radius: 10px;
+    padding: 1rem 1rem 0.75rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .06);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: box-shadow .18s ease, transform .18s ease;
+}
+
+.tinaco-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .12);
+    transform: translateY(-3px);
+}
+
+.tinaco-card header {
+    display: flex;
+    align-items: flex-start;
+    gap: .6rem;
+    margin-bottom: .4rem;
+}
+
+.tinaco-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.tinaco-title-wrap {
+    flex: 1;
+    min-width: 0;
+}
+
+.tinaco-name {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* truncar textos largos */
+.truncate {
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+}
+
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    margin-top: .35rem;
+}
+
+.badge {
+    font-size: .65rem;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: .25rem .45rem;
+    border-radius: 20px;
+    background: #eceff1;
+    color: #37474f;
+    line-height: 1;
+}
+
+.badge.estado-activado {
+    background: #e3f8ed;
+    color: #0a7a38;
+}
+
+.badge.estado-desactivado {
+    background: #fdecea;
+    color: #c62828;
+}
+
+.badge.bomba-activa {
+    background: #e8f1fe;
+    color: #0b62c4;
+}
+
+.badge.sin-bomba {
+    background: #f3f0ff;
+    color: #5e35b1;
+}
+
+.tinaco-body {
+    font-size: .9rem;
+    line-height: 1.4;
+    margin-top: .4rem;
+    flex: 1;
+}
+
+.tinaco-body dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    row-gap: .3rem;
+    column-gap: .5rem;
+}
+
+.tinaco-body dt {
+    font-weight: 600;
+    color: #444;
+}
+
+.tinaco-body dd {
+    margin: 0;
+    color: #555;
+}
+
+.tinaco-actions {
+    display: flex;
+    gap: .5rem;
+    margin-top: .7rem;
+}
+
+.tinaco-actions .btn {
+    flex: 1;
+    font-size: .8rem;
+    padding: .55rem .7rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.tinaco-actions .btn-edit {
+    background: #0b62c4;
+    color: #fff;
+}
+
+.tinaco-actions .btn-edit:hover {
+    background: #094e9a;
+}
+
+.tinaco-actions .btn-disable {
+    background: #be2d2d;
+    color: #fff;
+}
+
+.tinaco-actions .btn-disable:hover {
+    background: #9d2323;
+}
+
+/* Tooltip simple (por si se agrega más adelante) */
+.tinaco-card[title] {
+    cursor: help;
+}
+
+@media (max-width: 640px) {
+    .tinacos-main {
+        padding: 1rem 1rem 2rem;
+    }
+
+    .tinacos-grid {
+        gap: .9rem;
+    }
+}

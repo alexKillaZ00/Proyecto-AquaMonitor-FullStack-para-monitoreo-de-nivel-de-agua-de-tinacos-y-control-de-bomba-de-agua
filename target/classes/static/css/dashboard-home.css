@@ -1,0 +1,148 @@
+/* dashboard-home.css: estilos para el panel de Inicio con tinacos y bombas */
+
+.home-section {
+  margin-top: 10px;
+}
+
+.home-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.home-header h2 {
+  font-size: 1.6rem;
+  color: #2c3e50;
+}
+
+.home-filter { display: flex; align-items: center; gap: 8px; }
+.home-filter select { padding: 6px 8px; border-radius: 6px; border: 1px solid #e2e8f0; background: #fff; color: #334155; }
+
+.home-states { margin-bottom: 12px; }
+.home-state { display: none; font-size: .95rem; }
+.home-state.loading { color: #6c757d; }
+.home-state.error { color: #c33; }
+.home-state.empty { color: #7f8c8d; }
+
+.home-grid {
+  display: grid;
+  /* Desktop: exactamente 3 columnas que ocupan todo el ancho */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.tc-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.08);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  overflow: hidden; /* evita desbordes visuales */
+}
+
+.tc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.tc-title {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* permite que el título se encoja */
+}
+
+.tc-title h3 { font-size: 1.1rem; color: #2c3e50; overflow-wrap: anywhere; }
+.tc-title small { color: #7f8c8d; }
+
+.tc-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.badge-sm {
+  font-size: .72rem; padding: 3px 8px; border-radius: 999px; background: #f1f5f9; color: #475569;
+}
+.badge-auto { background: #e8f0fe; color: #1e40af; }
+.badge-manual { background: #fff3e0; color: #ef6c00; }
+
+.tc-body { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: center; }
+.tc-body > * { min-width: 0; } /* permitir que contenido 1fr se encoja */
+
+.tank {
+  position: relative; width: 100px; height: 160px; border-radius: 10px; border: 3px solid #4a90e2; overflow: hidden; background: #e3f2fd;
+}
+.water {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 0%; background: linear-gradient(180deg, rgba(33,150,243,.85), rgba(3,169,244,.95)); transition: height .4s ease;
+  z-index: 1;
+}
+.level-label {
+  position: absolute; width: 100%; text-align: center; top: 50%; left: 0; right: 0; transform: translateY(-50%);
+  font-weight: 700; color: #2c3e50; text-shadow: 0 1px 0 rgba(255,255,255,.6);
+  z-index: 2;
+}
+
+/* Badges adicionales */
+.badge-pump-on { background: #dcfce7; color: #166534; }
+.badge-overflow { background: #fee2e2; color: #b91c1c; text-align: center; }
+
+.tc-info {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; align-items: center;
+}
+.tc-info dt { color: #64748b; font-size: .85rem; }
+.tc-info dd { color: #334155; font-weight: 600; overflow-wrap: anywhere; }
+
+.tc-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; row-gap: 8px; }
+
+.pump-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+
+.state-indicator { width: 10px; height: 10px; border-radius: 50%; background: #94a3b8; box-shadow: inset 0 0 0 2px rgba(0,0,0,.05); }
+.state-on { background: #22c55e; }
+.state-off { background: #ef4444; }
+
+.btn-link { background: transparent; border: none; color: #4a90e2; cursor: pointer; padding: 6px 8px; border-radius: 6px; }
+.btn-link[disabled] { color: #94a3b8; cursor: not-allowed; }
+
+/* Icono de bomba para "bombas sin tinaco" */
+.pump-icon {
+  width: 100px; height: 100px; border-radius: 50%;
+  border: 3px solid #4a90e2; display: grid; place-items: center; margin: 0 auto;
+  background: #e3f2fd; color: #1f2937; font-size: 2rem;
+}
+.pump-gear { display: inline-block; }
+.spin { animation: spin 1.2s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
+
+/* Forzar 2 columnas hasta 1505px para evitar desbordes cuando el sidebar ya es fijo */
+@media (max-width: 1505px) {
+  .home-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Mobile: 1 columna y centrado del contenedor */
+@media (max-width: 640px) {
+  .tc-body { grid-template-columns: 1fr; }
+  .tank { margin: 0 auto; }
+  .home-grid {
+    grid-template-columns: 1fr;
+    max-width: 520px; /* ancho cómodo para una card */
+    margin-inline: auto; /* centrar */
+  }
+}
+
+/* Modal Vincular Bomba */
+.modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+.modal { width: min(560px, 92vw); background: #fff; border-radius: 10px; box-shadow: 0 20px 40px rgba(0,0,0,.2); overflow: hidden; display: flex; flex-direction: column; }
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #e2e8f0; }
+.modal-header h3 { margin: 0; font-size: 1.1rem; color: #1f2937; }
+.modal-close { background: transparent; border: none; font-size: 1.5rem; line-height: 1; cursor: pointer; color: #64748b; }
+.modal-body { padding: 16px; max-height: 60vh; overflow-y: auto; }
+.modal-footer { padding: 12px 16px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 10px; }
+.modal-loading { color: #6b7280; margin-bottom: 10px; }
+.modal-list { display: grid; gap: 8px; }
+.option-row { display: flex; gap: 10px; align-items: flex-start; padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; }
+.option-row:hover { background: #f9fafb; }
+.option-meta { font-size: .9rem; color: #475569; }
+.option-title { font-weight: 600; color: #111827; }

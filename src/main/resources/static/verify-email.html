@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verificar correo - AquaMonitor</title>
+    <link rel="stylesheet" href="css/login.css" />
+    <!-- Reutilizamos los estilos de login/reset para mantener consistencia -->
+    <style>
+        /* Ajustes mínimos para mensajes */
+        .status-message { margin-top: 12px; font-size: 0.95rem; }
+        .status-message.error { color: #b00020; }
+        .status-message.success { color: #0a7d16; }
+        .status-message.error { text-align: center; }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-card" id="verifyRoot">
+            <div class="header">
+                <img src="assets/logoSF.png" alt="Logo" class="logo" />
+                <h1>Verificación de correo</h1>
+                <p>Haz clic en el botón para verificar tu correo electrónico.</p>
+            </div>
+
+            <div class="login-form">
+                <button type="button" class="login-btn" id="verifyBtn">
+                    <span class="btn-text">Verificar correo</span>
+                </button>
+
+                <div class="status-message error" id="verifyError"></div>
+                <br>
+                <div class="register-link">
+                    <a href="login.html">Ir a iniciar sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/verify-email.js"></script>
+</body>
+
+</html>

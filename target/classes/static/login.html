@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaMonitor - Sistema de Monitoreo de Agua</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body id="loginBody">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="header">
+                <img src="assets/logoSF.png" alt="Tinaco Desbordado" class="logo">
+                <h1>AquaMonitor</h1>
+                <p>Sistema de Monitoreo de Nivel de Agua</p>
+            </div>
+
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <div class="input-container">
+                        <input type="email" id="email" name="email" required>
+                        <span class="input-icon">💧</span>
+                    </div>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-container">
+                        <input type="password" id="password" name="password" required>
+                        <span class="input-icon">🔒</span>
+                        <button type="button" class="toggle-password" id="togglePassword">👁️</button>
+                    </div>
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-text">Iniciar Sesión</span>
+                </button>
+
+                <div class="forgot-password">
+                    <a href="request-email.html" id="forgotPassword">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <div class="register-link">
+                    <a href="register.html" id="registerLink">¿No tienes cuenta? Regístrate</a>
+                </div>
+            </form>
+
+            <div class="footer">
+                <p>Monitorea tus tinacos y bombas de agua en tiempo real</p>
+                <div class="status-indicators">
+                    <div class="indicator">
+                        <div class="dot green"></div>
+                        <span>Tinaco Principal</span>
+                    </div>
+                    <div class="indicator">
+                        <div class="dot blue"></div>
+                        <span>Bomba Activa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="js/login.js"></script>
+</body>
+
+</html>

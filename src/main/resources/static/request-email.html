@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuperar contraseña - AquaMonitor</title>
+    <link rel="stylesheet" href="css/login.css" />
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-card" id="requestEmailRoot">
+            <div class="header">
+                <img src="assets/logoSF.png" alt="Logo" class="logo" />
+                <h1>Recuperar contraseña</h1>
+                <p>Ingresa tu correo para enviar un enlace de restablecimiento</p>
+            </div>
+
+            <form id="requestEmailForm" class="login-form">
+                <div class="form-group">
+                    <label for="email">Correo electrónico</label>
+                    <div class="input-container">
+                        <input type="email" id="email" name="email" required />
+                        <span class="input-icon">📧</span>
+                    </div>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <button type="submit" class="login-btn" id="sendBtn">
+                    <span class="btn-text">Enviar enlace</span>
+                </button>
+
+                <div class="register-link">
+                    <a href="login.html">Volver a iniciar sesión</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/request-email.js"></script>
+    </body>
+    </html>

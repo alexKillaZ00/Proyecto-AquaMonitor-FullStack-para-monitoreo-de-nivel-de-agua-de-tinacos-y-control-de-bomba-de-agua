@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - AquaMonitor</title>
+    <link rel="stylesheet" href="css/register.css">
+</head>
+
+<body id="registerBody">
+    <div class="register-container">
+        <div class="register-card" id="confirmEmailRoot">
+            <div class="header">
+                <img src="assets/logoSF.png" alt="Tinaco Desbordado" class="logo">
+                <h1>AquaMonitor</h1>
+                <p>Crear nueva cuenta</p>
+            </div>
+
+            <form class="register-form" id="registerForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre Completo</label>
+                    <div class="input-container">
+                        <input type="text" id="nombre" name="nombre" required>
+                        <span class="input-icon">👤</span>
+                    </div>
+                    <span class="error-message" id="nombreError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <div class="input-container">
+                        <input type="email" id="email" name="email" required>
+                        <span class="input-icon">💧</span>
+                    </div>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-container">
+                        <input type="password" id="password" name="password" required>
+                        <span class="input-icon">🔒</span>
+                        <button type="button" class="toggle-password" id="togglePassword">👁️</button>
+                    </div>
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmar Contraseña</label>
+                    <div class="input-container">
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        <span class="input-icon">🔒</span>
+                        <button type="button" class="toggle-password" id="toggleConfirmPassword">👁️</button>
+                    </div>
+                    <span class="error-message" id="confirmPasswordError"></span>
+                </div>
+
+                <button type="submit" class="register-btn" id="registerBtn">
+                    <span class="btn-text">Crear Cuenta</span>
+                </button>
+
+                <div class="login-link">
+                    <a href="login.html" id="loginLink">¿Ya tienes cuenta? Inicia sesión</a>
+                </div>
+            </form>
+
+            <div class="footer">
+                <p>Monitorea tus tinacos y bombas de agua en tiempo real</p>
+                <div class="status-indicators">
+                    <div class="indicator">
+                        <div class="dot green"></div>
+                        <span>Tinaco Principal</span>
+                    </div>
+                    <div class="indicator">
+                        <div class="dot blue"></div>
+                        <span>Bomba Activa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/register.js"></script>
+</body>
+
+</html>
