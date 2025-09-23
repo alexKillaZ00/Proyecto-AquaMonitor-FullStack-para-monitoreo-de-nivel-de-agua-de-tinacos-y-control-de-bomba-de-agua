@@ -63,7 +63,7 @@ public class EmailService {
 
     private String buildUrl(String path) {
         // Para Railway, no incluir el puerto si es 443 (HTTPS) o 80 (HTTP)
-        if ("https".equals(apiProtocol) && apiPort == 443) {
+        if ("https".equals(apiProtocol)) {
             return apiProtocol + "://" + apiHost + path;
         } else if ("http".equals(apiProtocol) && apiPort == 80) {
             return apiProtocol + "://" + apiHost + path;
