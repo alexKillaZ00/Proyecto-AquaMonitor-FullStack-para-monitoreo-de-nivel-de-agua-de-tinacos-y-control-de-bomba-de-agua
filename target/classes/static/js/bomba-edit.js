@@ -1,5 +1,23 @@
 // Configuración de la API
-const API_BASE_URL = "http://localhost:8080"
+const API_BASE_URL = (() => {
+  // Si estás en desarrollo local
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:8080/api';
+  }
+
+  // En producción, construir URL desde variables de entorno o usar el mismo dominio
+  const protocol = window.location.protocol;
+  const hostname = window.location.hostname;
+  const port = window.location.port;
+
+  // Si hay un puerto específico en producción
+  if (port && port !== '80' && port !== '443') {
+    return `${protocol}//${hostname}:${port}/api`;
+  }
+
+  // URL estándar de producción
+  return `${protocol}//${hostname}/api`;
+})();
 
 // Elementos del DOM
 const userName = document.getElementById("userName")
@@ -93,8 +111,8 @@ function validateForm() {
     if (ubicacion.length < 2 || ubicacion.length > 100) { ubicacionError.textContent = 'La ubicación debe tener entre 2 y 100 caracteres'; ok = false }
   }
 
-  if (![15,20,25].includes(pEnc)) { encenderError.textContent = 'Selecciona 15, 20 o 25'; ok = false }
-  if (![85,90,100].includes(pApg)) { apagarError.textContent = 'Selecciona 85, 90 o 100'; ok = false }
+  if (![15, 20, 25].includes(pEnc)) { encenderError.textContent = 'Selecciona 15, 20 o 25'; ok = false }
+  if (![85, 90, 100].includes(pApg)) { apagarError.textContent = 'Selecciona 85, 90 o 100'; ok = false }
 
   return ok
 }
@@ -119,8 +137,8 @@ async function loadBomba() {
     ubicacionInput.value = b.ubicacion ?? ''
 
     // Si vienen porcentajes en la respuesta (modo automatico), setearlos; sino dejar valores por defecto existentes del select
-    if (b.porcentajeEncender && [15,20,25].includes(Number(b.porcentajeEncender))) encenderSelect.value = String(b.porcentajeEncender)
-    if (b.porcentajeApagar && [85,90,100].includes(Number(b.porcentajeApagar))) apagarSelect.value = String(b.porcentajeApagar)
+    if (b.porcentajeEncender && [15, 20, 25].includes(Number(b.porcentajeEncender))) encenderSelect.value = String(b.porcentajeEncender)
+    if (b.porcentajeApagar && [85, 90, 100].includes(Number(b.porcentajeApagar))) apagarSelect.value = String(b.porcentajeApagar)
 
     if (formContainer) formContainer.style.display = 'block'
     if (editLoading) editLoading.style.display = 'none'

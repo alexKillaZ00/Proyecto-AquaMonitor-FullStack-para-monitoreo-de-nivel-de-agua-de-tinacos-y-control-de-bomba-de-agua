@@ -26,7 +26,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final UsuarioRepository usuarioRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public JwtAuthFilter(JwtService jwtService, UsuarioRepository usuarioRepository, RefreshTokenRepository refreshTokenRepository) {
+    public JwtAuthFilter(JwtService jwtService, UsuarioRepository usuarioRepository,
+            RefreshTokenRepository refreshTokenRepository) {
         this.jwtService = jwtService;
         this.usuarioRepository = usuarioRepository;
         this.refreshTokenRepository = refreshTokenRepository;
@@ -43,7 +44,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String userEmail = null;
 
         // Si es /auth/refresh, validar JWT y continuar
-        if ("/auth/refresh".equals(path)) {
+        if ("/api/auth/refresh".equals(path)) {
 
             // IMPORTANTE: Solo extraer de la cookie "refresh" (refresh token)
             jwt = extractRefreshTokenFromCookies(request);
@@ -59,15 +60,24 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 return;
             }
         } else {
-            // Para requests que NO sean /auth/refresh, aplicar validación de refresh token primero
+            // Para requests que NO sean /auth/refresh, aplicar validación de refresh token
+            // primero
             // FLUJO DE SEGURIDAD: Verificar que el refresh token siga existiendo en BD
             String refreshToken = extractRefreshTokenFromCookies(request);
-            
+
             // Si existe refresh token, verificar que existe en BD
             if (refreshToken != null) {
-                boolean refreshTokenExistsInDB = refreshTokenRepository.findByToken(refreshToken).isPresent(); //Genera dos consultas a BD, se puede optimizar si es necesario
+                boolean refreshTokenExistsInDB = refreshTokenRepository.findByToken(refreshToken).isPresent(); // Genera
+                                                                                                               // dos
+                                                                                                               // consultas
+                                                                                                               // a BD,
+                                                                                                               // se
+                                                                                                               // puede
+                                                                                                               // optimizar
+                                                                                                               // si es
+                                                                                                               // necesario
                 if (!refreshTokenExistsInDB) {
-                    // Si el refresh token no existe en BD (fue invalidado/expirado), 
+                    // Si el refresh token no existe en BD (fue invalidado/expirado),
                     // continuar sin autenticación para que Spring Security maneje la autorización
                     deleteCookie(response, "refresh"); // Eliminar cookie de refresh token
                     filterChain.doFilter(request, response);
@@ -79,7 +89,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
             }
-            
+
             // Proceder con la extracción del access token
             final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -93,7 +103,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     filterChain.doFilter(request, response);
                     return;
                 }
-                // Si hay token en las cookies, pero es un refresh token, no permitir acceso a recursos protegidos
+                // Si hay token en las cookies, pero es un refresh token, no permitir acceso a
+                // recursos protegidos
                 if (isRefreshToken(jwt)) {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     response.getWriter().write("No puedes usar refresh token para acceder a recursos protegidos");
@@ -124,9 +135,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 boolean isTokenValid = false;
 
                 // Para /auth/refresh, validar de forma especial
-                if ("/auth/refresh".equals(path)) {
+                if ("/api/auth/refresh".equals(path)) {
                     // Para refresh, solo verificar que es un refresh token válido estructuralmente
-                    // No validar expiración aquí, eso se hará en el servicio AuthService, en el método refresh()
+                    // No validar expiración aquí, eso se hará en el servicio AuthService, en el
+                    // método refresh()
                     isTokenValid = isRefreshToken(jwt);
                 } else {
                     // Para otras rutas, validación completa
@@ -188,6 +200,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         return path.startsWith("/css/")
                 || path.startsWith("/js/")
                 || path.startsWith("/assets/")
+                || path.endsWith(".html")
                 || path.startsWith("/login.html")
                 || path.startsWith("/register.html")
                 || path.startsWith("/dashboard.html")
@@ -208,11 +221,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 || path.startsWith("/reset-password.html")
                 || path.startsWith("/request-email.html")
                 || path.startsWith("/verify-email.html")
-                || path.equals("/auth/login")
-                || path.equals("/auth/register")
-                || path.startsWith("/auth/password-reset/request")
-                || path.equals("/auth/password-reset/confirm")
-                || path.equals("/auth/verify-email") // <-- nuevo endpoint para verificar email
+                || path.startsWith("/404.html")
+                || path.startsWith("/api/auth/login")
+                || path.startsWith("/api/auth/register")
+                || path.startsWith("/api/auth/password-reset/request")
+                || path.startsWith("/api/auth/password-reset/confirm")
+                || path.startsWith("/api/auth/verify-email") // <-- nuevo endpoint para verificar email
                 || path.equals("/favicon.ico") // <-- excluimos el favicon
                 || path.startsWith("/.well-known/"); // Excluir rutas de Chrome DevTools y similares
     }
@@ -220,7 +234,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private void deleteCookie(HttpServletResponse response, String name) {
         Cookie cookie = new Cookie(name, null);
         cookie.setHttpOnly(true);
-        cookie.setSecure(false);
+        cookie.setSecure(true); // Cambiar a true en producción con HTTPS
         cookie.setPath("/");
         cookie.setMaxAge(0);
         cookie.setAttribute("SameSite", "Strict");

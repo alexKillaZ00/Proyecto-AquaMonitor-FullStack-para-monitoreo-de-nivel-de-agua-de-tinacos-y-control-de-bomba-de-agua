@@ -1,5 +1,23 @@
 // tinaco-add.js
-const API_BASE_URL = 'http://localhost:8080'
+const API_BASE_URL = (() => {
+    // Si estás en desarrollo local
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return 'http://localhost:8080/api';
+    }
+
+    // En producción, construir URL desde variables de entorno o usar el mismo dominio
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+
+    // Si hay un puerto específico en producción
+    if (port && port !== '80' && port !== '443') {
+        return `${protocol}//${hostname}:${port}/api`;
+    }
+
+    // URL estándar de producción
+    return `${protocol}//${hostname}/api`;
+})();
 
 // Referencias comunes
 const userName = document.getElementById('userName')

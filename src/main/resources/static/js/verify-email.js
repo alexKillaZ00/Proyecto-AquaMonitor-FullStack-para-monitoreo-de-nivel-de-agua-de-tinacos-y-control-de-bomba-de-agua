@@ -1,5 +1,23 @@
 // Config
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = (() => {
+  // Si estás en desarrollo local
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:8080/api';
+  }
+
+  // En producción, construir URL desde variables de entorno o usar el mismo dominio
+  const protocol = window.location.protocol;
+  const hostname = window.location.hostname;
+  const port = window.location.port;
+
+  // Si hay un puerto específico en producción
+  if (port && port !== '80' && port !== '443') {
+    return `${protocol}//${hostname}:${port}/api`;
+  }
+
+  // URL estándar de producción
+  return `${protocol}//${hostname}/api`;
+})();
 
 // Elements
 const root = document.getElementById('verifyRoot');
@@ -11,7 +29,7 @@ const params = new URLSearchParams(window.location.search);
 const token = params.get('token');
 
 if (!token) {
-    root.innerHTML = `
+  root.innerHTML = `
     <div class="header" style="text-align:center">
       <div style="font-size:56px">⚠️</div>
       <h1>Token faltante</h1>
@@ -24,19 +42,19 @@ if (!token) {
 }
 
 function showLoading() {
-    verifyBtn.classList.add('loading');
-    verifyBtn.querySelector('.btn-text').textContent = 'Verificando';
-    verifyBtn.disabled = true;
+  verifyBtn.classList.add('loading');
+  verifyBtn.querySelector('.btn-text').textContent = 'Verificando';
+  verifyBtn.disabled = true;
 }
 
 function hideLoading() {
-    verifyBtn.classList.remove('loading');
-    verifyBtn.querySelector('.btn-text').textContent = 'Verificar correo';
-    verifyBtn.disabled = false;
+  verifyBtn.classList.remove('loading');
+  verifyBtn.querySelector('.btn-text').textContent = 'Verificar correo';
+  verifyBtn.disabled = false;
 }
 
 function showSuccess() {
-    root.innerHTML = `
+  root.innerHTML = `
     <div class="header" style="text-align:center">
       <div style="font-size:56px">✅</div>
       <h1>Correo verificado</h1>
@@ -49,33 +67,33 @@ function showSuccess() {
 }
 
 function setError(msg) {
-    verifyError.textContent = msg || '';
+  verifyError.textContent = msg || '';
 }
 
 async function verifyEmail() {
-    if (!token) return; // ya se maneja arriba la UI
-    setError('');
-    showLoading();
-    setTimeout(async () => {
-        try {
-            const body = new URLSearchParams({ token });
-            const res = await fetch(`${API_BASE_URL}/auth/verify-email`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body
-            });
-            if (res.ok) {
-                showSuccess();
-            } else {
-                const text = await res.json();
-                setError(text.message || 'No se pudo verificar el correo. Inténtalo nuevamente.');
-            }
-        } catch (err) {
-            setError('Error de red. Inténtalo nuevamente.');
-        } finally {
-            hideLoading();
-        }
-    }, 1500); // Simula retardo mínimo para UX
+  if (!token) return; // ya se maneja arriba la UI
+  setError('');
+  showLoading();
+  setTimeout(async () => {
+    try {
+      const body = new URLSearchParams({ token });
+      const res = await fetch(`${API_BASE_URL}/auth/verify-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body
+      });
+      if (res.ok) {
+        showSuccess();
+      } else {
+        const text = await res.json();
+        setError(text.message || 'No se pudo verificar el correo. Inténtalo nuevamente.');
+      }
+    } catch (err) {
+      setError('Error de red. Inténtalo nuevamente.');
+    } finally {
+      hideLoading();
+    }
+  }, 1500); // Simula retardo mínimo para UX
 }
 
 // Auto-verify on load for better UX (optional). User can also press button manually.

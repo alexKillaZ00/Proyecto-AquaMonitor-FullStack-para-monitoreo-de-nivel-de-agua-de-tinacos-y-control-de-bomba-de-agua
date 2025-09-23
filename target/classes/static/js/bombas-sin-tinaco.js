@@ -1,5 +1,23 @@
 // Configuración y utilidades comunes
-const API_BASE_URL = 'http://localhost:8080'
+const API_BASE_URL = (() => {
+  // Si estás en desarrollo local
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:8080/api';
+  }
+
+  // En producción, construir URL desde variables de entorno o usar el mismo dominio
+  const protocol = window.location.protocol;
+  const hostname = window.location.hostname;
+  const port = window.location.port;
+
+  // Si hay un puerto específico en producción
+  if (port && port !== '80' && port !== '443') {
+    return `${protocol}//${hostname}:${port}/api`;
+  }
+
+  // URL estándar de producción
+  return `${protocol}//${hostname}/api`;
+})();
 
 async function authenticatedFetch(url, options = {}) {
   const defaultOptions = { credentials: 'include', headers: { 'Content-Type': 'application/json', ...(options.headers || {}) } }
@@ -56,7 +74,7 @@ function showError(msg) {
   homeError.style.display = 'block'
 }
 
-function escapeHtml(str) { return String(str || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])) }
+function escapeHtml(str) { return String(str || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])) }
 function escapeAttr(str) { return escapeHtml(str).replace(/'/g, '&#39;') }
 function truncate(text, max = 25) { const t = String(text || ''); return t.length > max ? t.slice(0, max - 3) + '...' : t }
 
@@ -114,8 +132,8 @@ function renderBombas(items) {
     `
     frag.appendChild(card)
 
-  // Checar estado una sola vez al cargar
-  queueMicrotask(() => { refreshPumpState(bom) })
+    // Checar estado una sola vez al cargar
+    queueMicrotask(() => { refreshPumpState(bom) })
 
     // Wire manual toggle
     queueMicrotask(() => {
@@ -161,5 +179,5 @@ async function refreshPumpState(bomba) {
     if (icon) icon.classList.toggle('spin', !!encendida)
     const toggle = document.getElementById(`ptoggle-${bomba.id}`)
     if (toggle) toggle.checked = !!encendida
-  } catch (_) {}
+  } catch (_) { }
 }

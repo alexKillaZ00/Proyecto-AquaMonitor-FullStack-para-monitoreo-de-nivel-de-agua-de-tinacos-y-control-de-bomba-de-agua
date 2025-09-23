@@ -15,7 +15,7 @@ import com.tinaco.monitoragua.usuario.entity.Usuario;
 import com.tinaco.monitoragua.usuario.service.UsuarioService;
 
 @RestController
-@RequestMapping("/usuario/me")
+@RequestMapping("/api/usuario/me")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tinaco.monitoragua.usuario.entity.Usuario;
 
 @RestController
-@RequestMapping("/reportes")
+@RequestMapping("/api/reportes")
 public class ReporteController {
 
     private final ReporteService reporteService;

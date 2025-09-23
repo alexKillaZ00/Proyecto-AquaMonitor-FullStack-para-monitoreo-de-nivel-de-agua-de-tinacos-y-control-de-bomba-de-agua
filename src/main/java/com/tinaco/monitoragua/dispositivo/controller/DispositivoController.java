@@ -18,7 +18,7 @@ import com.tinaco.monitoragua.dispositivo.service.DispositivoService;
 import com.tinaco.monitoragua.usuario.entity.Usuario.Role;
 
 @RestController
-@RequestMapping("/dispositivos")
+@RequestMapping("/api/dispositivos")
 public class DispositivoController {
 
     private final DispositivoService dispositivoService;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tinaco.monitoragua.auth.service.PasswordResetService;
 
 @RestController
-@RequestMapping("/auth/password-reset")
+@RequestMapping("/api/auth/password-reset")
 public class PasswordResetController {
 
     private final PasswordResetService passwordResetService;

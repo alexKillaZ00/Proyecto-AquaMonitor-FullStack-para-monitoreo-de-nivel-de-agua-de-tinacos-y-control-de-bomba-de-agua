@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tinaco.monitoragua.auth.service.EmailVerificationService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class EmailVerificationController {
 
     private final EmailVerificationService emailVerificationService;

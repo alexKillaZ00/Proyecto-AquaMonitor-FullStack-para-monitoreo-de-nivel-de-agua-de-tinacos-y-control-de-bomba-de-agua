@@ -10,7 +10,7 @@ import com.tinaco.monitoragua.nivelAguaActual.service.NivelAguaActualService;
 import com.tinaco.monitoragua.usuario.entity.Usuario;
 
 @RestController
-@RequestMapping("/nivel")
+@RequestMapping("/api/nivel")
 public class NivelAguaActualController {
 
     private final NivelAguaActualService nivelAguaActualService;

@@ -1,5 +1,23 @@
 // Configuración de la API
-const API_BASE_URL = "http://localhost:8080"
+const API_BASE_URL = (() => {
+  // Si estás en desarrollo local
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:8080/api';
+  }
+
+  // En producción, construir URL desde variables de entorno o usar el mismo dominio
+  const protocol = window.location.protocol;
+  const hostname = window.location.hostname;
+  const port = window.location.port;
+
+  // Si hay un puerto específico en producción
+  if (port && port !== '80' && port !== '443') {
+    return `${protocol}//${hostname}:${port}/api`;
+  }
+
+  // URL estándar de producción
+  return `${protocol}//${hostname}/api`;
+})();
 
 // Elementos del DOM
 const userName = document.getElementById("userName")
@@ -64,7 +82,7 @@ async function fetchBombasDesactivadas() {
 }
 
 function truncate(text, max = 100) { if (!text) return ''; return text.length > max ? text.slice(0, max - 1) + '…' : text }
-function escapeHtml(str) { return String(str).replace(/[&<>"];/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',';':'&#59;'}[c] || c)) }
+function escapeHtml(str) { return String(str).replace(/[&<>"];/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', ';': '&#59;' }[c] || c)) }
 function escapeAttr(str) { return escapeHtml(str).replace(/'/g, '&#39;') }
 
 function renderBombas(bombas) {

@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthService authService;
@@ -75,18 +75,18 @@ public class AuthController {
         // Access token 15 minutos
         Cookie jwtCookie = new Cookie("jwt", authResponse.getAccessToken());
         jwtCookie.setHttpOnly(true);
-        jwtCookie.setSecure(true);
+        jwtCookie.setSecure(true); // Cambiar a true en producción con HTTPS
         jwtCookie.setPath("/");
-        jwtCookie.setMaxAge(900); // 15 minutos
+        jwtCookie.setMaxAge(900); // 15 minutos, cambiar a 10 minutos en desarrollo
         jwtCookie.setAttribute("SameSite", "Strict");
         response.addCookie(jwtCookie);
 
         // Refresh token 10 días
         Cookie refreshCookie = new Cookie("refresh", authResponse.getRefreshToken());
         refreshCookie.setHttpOnly(true);
-        refreshCookie.setSecure(true);
+        refreshCookie.setSecure(true); // Cambiar a true en producción con HTTPS
         refreshCookie.setPath("/");
-        refreshCookie.setMaxAge(864000); // 10 días
+        refreshCookie.setMaxAge(864000); // 10 días, cambiar a 1 dia en desarrollo
         refreshCookie.setAttribute("SameSite", "Strict");
         response.addCookie(refreshCookie);
     }
@@ -94,7 +94,7 @@ public class AuthController {
     private void deleteCookie(HttpServletResponse response, String name) {
         Cookie cookie = new Cookie(name, null);
         cookie.setHttpOnly(true);
-        cookie.setSecure(false);
+        cookie.setSecure(true);
         cookie.setPath("/");
         cookie.setMaxAge(0);
         cookie.setAttribute("SameSite", "Strict");

@@ -4,6 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -109,7 +115,7 @@ public class GlobalExceptionHandler {
                                 .status(HttpStatus.UNAUTHORIZED) // 401
                                 .body(Map.of("timestamp", LocalDateTime.now(),
                                                 "message", ex.getMessage()));
-        }       
+        }
 
         @ExceptionHandler(IllegalArgumentException.class)
         public ResponseEntity<?> handleBadRequest(IllegalArgumentException ex) {
@@ -182,7 +188,7 @@ public class GlobalExceptionHandler {
                         DestinoAguaInvalidoException.class,
                         CapacidadLitrosInvalidaException.class,
                         AlturaMaximaCmInvalidaException.class,
-                        CodigoIdentificadorInvalidoException.class})
+                        CodigoIdentificadorInvalidoException.class })
         public ResponseEntity<?> handleTinacoFieldValidation(RuntimeException ex) {
                 return ResponseEntity.unprocessableEntity().body(Map.of( // 422
                                 "timestamp", LocalDateTime.now(),
@@ -191,7 +197,23 @@ public class GlobalExceptionHandler {
 
         // Controlador genérico de errores
         @ExceptionHandler(Exception.class)
-        public ResponseEntity<?> handleGenericException(Exception ex) {
+        public ResponseEntity<?> handleGenericException(Exception ex, HttpServletRequest request,
+                        HttpServletResponse response) throws IOException {
+                if (ex instanceof NoResourceFoundException) {
+                        String requestUri = request.getRequestURI();
+
+                        // Si es una API, devolver response entity con 404
+                        if (requestUri.startsWith("/api/")) {
+                                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                                .body(Map.of("timestamp", LocalDateTime.now(),
+                                                                "message", "Resource not found"));
+                        } else {
+                                // Para recursos no-API, redirigir a página 404
+                                response.sendRedirect("/404.html");
+                        }
+                        return null; // Ya se manejó la respuesta
+                }
+
                 return ResponseEntity
                                 .status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
                                 .body(Map.of("timestamp", LocalDateTime.now(),
