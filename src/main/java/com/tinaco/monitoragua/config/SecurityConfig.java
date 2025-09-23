@@ -47,6 +47,8 @@ public class SecurityConfig {
                                                                 "/verify-email.html",
                                                                 // Páginas de error
                                                                 "/404.html",
+                                                                // Ruta raíz para redirección
+                                                                "/",
                                                                 // Archivos estáticos (HTML, CSS, JS, imágenes, etc.)
                                                                 "/css/**", "/js/**", "/assets/**", "/favicon.ico")
                                                 .permitAll() // Acceso público, no requiere usuario autenticado

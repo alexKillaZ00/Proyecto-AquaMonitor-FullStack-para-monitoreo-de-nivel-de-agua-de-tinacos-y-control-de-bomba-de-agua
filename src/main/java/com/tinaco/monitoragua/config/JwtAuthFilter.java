@@ -227,6 +227,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 || path.startsWith("/api/auth/password-reset/request")
                 || path.startsWith("/api/auth/password-reset/confirm")
                 || path.startsWith("/api/auth/verify-email") // <-- nuevo endpoint para verificar email
+                || path.equals("/") // <-- excluimos la raíz
                 || path.equals("/favicon.ico") // <-- excluimos el favicon
                 || path.startsWith("/.well-known/"); // Excluir rutas de Chrome DevTools y similares
     }
