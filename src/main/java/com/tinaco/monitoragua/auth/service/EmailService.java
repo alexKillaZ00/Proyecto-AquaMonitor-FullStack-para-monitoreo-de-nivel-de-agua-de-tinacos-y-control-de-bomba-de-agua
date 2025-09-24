@@ -19,8 +19,11 @@ public class EmailService {
     @Value("${api.protocol}")
     private String apiProtocol;
 
-    @Value("${spring.mail.username}")
+    @Value("${mail.from.email}")
     private String fromEmail;
+
+    @Value("${mail.from.name}")
+    private String fromName;
 
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
@@ -35,11 +38,12 @@ public class EmailService {
         // String resetUrl = "http://127.0.0.1:5500/reset-password.html?token=" + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromEmail); // El mismo correo de la configuración
+        message.setFrom(fromName + " <" + fromEmail + ">"); // El mismo correo de la configuración
         message.setTo(to);
-        message.setSubject("Solicitud de Restablecimiento de Contraseña");
-        message.setText("Hola,\n\nHas solicitado restablecer tu contraseña.\n\n" +
+        message.setSubject("Solicitud de Restablecimiento de Contraseña - AquaMonitor");
+        message.setText("Hola,\n\nHas solicitado restablecer tu contraseña en AquaMonitor.\n\n" +
                 "Haz clic en el siguiente enlace para continuar:\n" + resetUrl + "\n\n" +
+                "Este enlace expirará en 15 minutos por seguridad.\n\n" +
                 "Si no solicitaste esto, por favor ignora este correo.\n\n" +
                 "Gracias,\nEl equipo de AquaMonitor.");
 
@@ -50,14 +54,14 @@ public class EmailService {
         String verificationUrl = buildUrl("/verify-email.html?token=" + token);
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromEmail); // El mismo correo de la configuración
+        message.setFrom(fromName + " <" + fromEmail + ">"); // El mismo correo de la configuración
         message.setTo(email);
-        message.setSubject("Verificación de Correo Electrónico");
-        message.setText("Hola,\n\nGracias por registrarte en AquaMonitor.\n\n" +
-                "Por favor, haz clic en el siguiente enlace para verificar tu correo electrónico:\n" + verificationUrl
-                + "\n\n" +
+        message.setSubject("Verificación de Correo Electrónico - AquaMonitor");
+        message.setText("¡Hola!\n\nGracias por registrarte en AquaMonitor.\n\n" +
+                "Por favor, haz clic en el siguiente enlace para verificar tu correo electrónico:\n" + verificationUrl+ "\n\n" +
+                "Este enlace expirará en 15 minutos.\n\n" +
                 "Si no te has registrado en AquaMonitor, por favor ignora este correo.\n\n" +
-                "Gracias,\nEl equipo de AquaMonitor.");
+                "Saludos,\nEl equipo de AquaMonitor");
         mailSender.send(message);
     }
 
