@@ -1,13 +1,16 @@
 // Configuración de la API
 const API_BASE_URL = (() => {
-    // Si estás en desarrollo local
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        return 'http://localhost:8080/api';
+    const hostname = window.location.hostname;
+    
+    // Si estás en desarrollo local o en la red local
+    if (hostname === 'localhost' || 
+        hostname === '127.0.0.1' || 
+        hostname === '192.168.1.74') { // Agrega tu IP local aquí
+        return `http://${hostname}:8080/api`;
     }
 
     // En producción, construir URL desde variables de entorno o usar el mismo dominio
     const protocol = window.location.protocol;
-    const hostname = window.location.hostname;
     const port = window.location.port;
 
     // Si hay un puerto específico en producción

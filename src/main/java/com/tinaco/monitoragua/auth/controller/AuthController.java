@@ -75,29 +75,29 @@ public class AuthController {
         // Access token 15 minutos
         Cookie jwtCookie = new Cookie("jwt", authResponse.getAccessToken());
         jwtCookie.setHttpOnly(true);
-        jwtCookie.setSecure(true); // Cambiar a true en producción con HTTPS
+        jwtCookie.setSecure(false); // false para desarrollo (HTTP), true en producción con HTTPS
         jwtCookie.setPath("/");
         jwtCookie.setMaxAge(900); // 15 minutos, cambiar a 10 minutos en desarrollo
-        jwtCookie.setAttribute("SameSite", "Strict");
+        jwtCookie.setAttribute("SameSite", "Lax"); // Lax para permitir cookies en red local
         response.addCookie(jwtCookie);
 
         // Refresh token 10 días
         Cookie refreshCookie = new Cookie("refresh", authResponse.getRefreshToken());
         refreshCookie.setHttpOnly(true);
-        refreshCookie.setSecure(true); // Cambiar a true en producción con HTTPS
+        refreshCookie.setSecure(false); // false para desarrollo (HTTP), true en producción con HTTPS
         refreshCookie.setPath("/");
         refreshCookie.setMaxAge(864000); // 10 días, cambiar a 1 dia en desarrollo
-        refreshCookie.setAttribute("SameSite", "Strict");
+        refreshCookie.setAttribute("SameSite", "Lax"); // Lax para permitir cookies en red local
         response.addCookie(refreshCookie);
     }
 
     private void deleteCookie(HttpServletResponse response, String name) {
         Cookie cookie = new Cookie(name, null);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+        cookie.setSecure(false); // false para desarrollo (HTTP), true en producción con HTTPS
         cookie.setPath("/");
         cookie.setMaxAge(0);
-        cookie.setAttribute("SameSite", "Strict");
+        cookie.setAttribute("SameSite", "Lax"); // Lax para permitir cookies en red local
         response.addCookie(cookie);
     }
 

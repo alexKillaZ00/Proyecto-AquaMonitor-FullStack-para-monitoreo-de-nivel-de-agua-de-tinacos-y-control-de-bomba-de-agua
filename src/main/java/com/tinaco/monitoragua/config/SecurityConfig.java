@@ -94,37 +94,4 @@ public class SecurityConfig {
                 };
         }
 
-        /*
-         * @Bean
-         * public CorsConfigurationSource corsConfigurationSource() {
-         * CorsConfiguration configuration = new CorsConfiguration();
-         * 
-         * // Permitir orígenes específicos (ajusta según tu frontend)
-         * configuration.setAllowedOriginPatterns(Arrays.asList(
-         * "http://localhost:8080", // Para desarrollo local
-         * "http://127.0.0.1:*", // Para desarrollo local
-         * "https://tu-dominio.com" // Para producción
-         * ));
-         * 
-         * // Métodos HTTP permitidos
-         * configuration.setAllowedMethods(Arrays.asList(
-         * "GET", "POST", "PUT", "DELETE", "OPTIONS"));
-         * 
-         * // Headers permitidos
-         * configuration.setAllowedHeaders(Arrays.asList(
-         * "Authorization", "Content-Type", "X-Requested-With"));
-         * 
-         * // Permitir credenciales (cookies)
-         * configuration.setAllowCredentials(true);
-         * 
-         * // Headers expuestos al frontend
-         * configuration.setExposedHeaders(Arrays.asList(
-         * "Authorization"));
-         * 
-         * UrlBasedCorsConfigurationSource source = new
-         * UrlBasedCorsConfigurationSource();
-         * source.registerCorsConfiguration("/**", configuration);
-         * return source;
-         * }
-         */
 }
